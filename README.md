@@ -36,6 +36,42 @@ Registering a user, hashing passwords, login methods, using mongo db, Jwt's , Ge
 
 ## HASHING PASSWORDS (####) later we can decode the password is real 
 - so we store hash passwords
+- Installation to decrypt
+  `yarn add bcrypt`
+  
+  # Hashing the password with salt
+- How the becrypt works is that is going to first generate a salt. [ A salt is a random data that we use to modify an encryption. ]
+  So salt agian it's kind of a random string, a random hash, and it needs a number as well.
+   steps 
+   1. Genertaing the salt and deciding how many times we will do this
+   2. now we are going to hash the password with the salt that we recieve here below
+ 
+ 
+  <img width="529" alt="image" src="https://user-images.githubusercontent.com/56376002/208283392-3acb2489-df8f-498b-b5db-c5ae6ea078b7.png">
+  
+  3. and then the longer hash with the real password in it , we will store it in the db
+  
+  
+  <img width="728" alt="image" src="https://user-images.githubusercontent.com/56376002/208283640-c68d2588-088a-4085-ae50-93f3c393e26b.png">
+
+  
+ - Now, when we want to store the user , we want to intercept in between somewhere ,  beofre saving the user
+ - So , whatever user enters as a password and then we gonna hash it  , and we store the hash one instead of the real one
+ - In User.js import the becrypt and genrate a salt then gernate a hash password
+    1. Storing the user in DB
+    2. UserModel - the instance of the above User modal in User.js
+    3. so the user is going to go through this schema first before getting saved in the monngo db
+    4. so we get middleware functions before or after getting the user saved in db (ex . userSchema.pre('save', fn(next)) runs before the main save to db
+    5. // basically the pre save runs like this//  userDetails.presave.save((err, doc)  i.e like in between
+    
+    <img width="652" alt="image" src="https://user-images.githubusercontent.com/56376002/208285444-a6857f41-0155-4df2-8370-f544a725ea3a.png">
+
+### Checking in postman
+<img width="819" alt="image" src="https://user-images.githubusercontent.com/56376002/208285518-bfc0901f-ad8d-40d7-96ab-6bf5d244e0bc.png">
+
+## User login (compare hash with real passwrod) - with becrypt
+
+
 
 
 
