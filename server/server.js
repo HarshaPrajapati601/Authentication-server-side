@@ -12,6 +12,21 @@ app.use(bodyParser.json());
 // IMPORTING MODELS
 const { User } = require('./models/user');
 
+// ROUTES
+
+app.post('/api/register-users', (req, res) => {
+    const userDetails = new User({
+        email: req.body.email,
+        password: req.body.password
+    });
+    // saving it in the mongo DB
+    userDetails.save((err, doc) => { //the doc back from the db
+        if(err)  res.status(400).send(err);
+        // return res.json(doc);
+        res.status(200).send(doc);
+    })
+})
+
 const port = process.env.PORT || 3003;
 app.listen(port); //listening to the port
 
