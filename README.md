@@ -70,7 +70,12 @@ Registering a user, hashing passwords, login methods, using mongo db, Jwt's , Ge
 <img width="819" alt="image" src="https://user-images.githubusercontent.com/56376002/208285518-bfc0901f-ad8d-40d7-96ab-6bf5d244e0bc.png">
 
 ## User login (compare hash with real passwrod) - with becrypt
-// temp change
+<img width="819" alt="image" src="https://user-images.githubusercontent.com/56376002/208286673-93b042db-6a6e-4d1f-a708-15c4398d5279.png">
+
+Login route
+<img width="819" alt="image" src="https://user-images.githubusercontent.com/56376002/208293252-64aecdb4-09d4-405f-949d-169d0f76ebc8.png">
+
+
 
 
 
