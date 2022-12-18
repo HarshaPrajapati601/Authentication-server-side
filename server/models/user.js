@@ -34,7 +34,15 @@ userSchema.pre('save', function(next){
         next(); //move forward to next
     }
    
-})
+});
+
+userSchema.methods.comparePassword = function(candidatePassword, cb) {
+    bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
+    if(err) cb(err);
+    cb(null, isMatch)
+
+    })
+}
 
 // basically the pre save runs like this
 //  userDetails.presave.save((err, doc) 

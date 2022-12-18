@@ -36,8 +36,8 @@ app.post('/api/register-users', (req, res) => {
             if(!user) res.json({message: 'User not found'})
             // res.status(200).send(user);
             // 2. compare the password with the hash password on db and move forward() - using bcrypt
-            bcrypt.compare(req.body.password, user.password, (err, isMatch) => {
-                if (err) throw error;
+            user.comparePassword(req.body.password, (err, isMatch) => {
+                if (err)  res.status(400).send(err);
                 if(!isMatch) res.json({message: 'Bad Password'})
                 res.status(200).send(isMatch);
             })
