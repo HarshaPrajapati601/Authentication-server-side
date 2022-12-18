@@ -15,11 +15,12 @@ const { User } = require('./models/user');
 // ROUTES
 
 app.post('/api/register-users', (req, res) => {
-    const userDetails = new User({
+    //1. Storing the user in DB
+    const userDetails = new User({ //2. this is the instance of the above modal in User.js
         email: req.body.email,
         password: req.body.password
     });
-    // saving it in the mongo DB
+
     userDetails.save((err, doc) => { //the doc back from the db
         if(err)  res.status(400).send(err);
         // return res.json(doc);
