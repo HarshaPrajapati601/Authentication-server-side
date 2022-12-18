@@ -38,8 +38,12 @@ app.post('/api/register-users', (req, res) => {
             // 2. compare the password with the hash password on db and move forward() - using bcrypt
             user.comparePassword(req.body.password, (err, isMatch) => {
                 if (err)  res.status(400).send(err);
-                if(!isMatch) res.json({message: 'Bad Password'})
-                res.status(200).send(isMatch);
+                if(!isMatch) res.json({message: 'Bad Password'});
+
+                user.generateToken((err, user) => {
+                    if (err) res.status(400).send(err);
+                    res.cookie('authToken', user.token).send('ok'); //storing the token in the cookie on the browser from server
+                })
             })
         });
         // 3. send the response

@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const SALT_I = 10;
+const jwt = require('jsonwebtoken');
+let id = 200;
+let secret = 'superSecretCodeOnlyStoredOnServer';
 //3. so the user is going to go through this schema first before getting saved in the monngo db
 const userSchema = mongoose.Schema({
     email: {
@@ -13,6 +16,9 @@ const userSchema = mongoose.Schema({
         type: String,
         minLength: 6,
         required: true
+    },
+    token: {
+        type: String
     }
 });
 
@@ -44,7 +50,18 @@ userSchema.methods.comparePassword = function(candidatePassword, cb) {
     })
 }
 
+userSchema.methods.generateToken = function(cb) {
+    var user = this;
+    var token = jwt.sign(user._id.toHexString(), secret);
+    user.token = token;
+    // TO SAVE THE TOKEN in the mongo db
+    user.save(function(err, user){
+        if(err) return cb(err);
+        return cb(null, user)
+    })
+}
+
 // basically the pre save runs like this
-//  userDetails.presave.save((err, doc) 
+//  userDetails.preSave.save((err, doc) 
 const User = mongoose.model('UserModel', userSchema);
 module.exports = { User };
