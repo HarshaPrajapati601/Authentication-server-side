@@ -25,5 +25,17 @@ Registering a user, hashing passwords, login methods, using mongo db, Jwt's , Ge
 
   <img width="545" alt="image" src="https://user-images.githubusercontent.com/56376002/208282495-8766389c-247a-47a9-8f72-8027cfc0f069.png">
 
+# Registering a user to db
+ - Add it in the db
+ - ROUTES CREATION and saving the user in db
+ 
+ ## POSTMAN
+ Now accessing the url through postman and making the post request there - and we get the response back from mongo
+ 
+ <img width="505" alt="image" src="https://user-images.githubusercontent.com/56376002/208283024-758bd670-adc5-41ef-bffc-78f9fc873f72.png">
+
+## HASHING PASSWORDS (####) later we can decode the password is real 
+- so we store hash passwords
+
 
 
