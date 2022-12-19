@@ -3,6 +3,10 @@
 Registering a user, hashing passwords, login methods, using mongo db, Jwt's , Generating tokens and verify token 
 - Json placeholder for fake apis - https://jsonplaceholder.typicode.com/
 
+Client [] ---Login req---> Server[] (Schema checks, converts password to hash(encryption)
+--- server checks if credentials present in mongoDb and if present it generates a jwt hash --> which the client stores in the Cookie -- > any path change --> user is asked for the token --> the client verfiys the token matches and allow user
+ -----> saveDB (tokens can also be saved in the DB)
+
 ## steps to start
 - `npm install express mongoose body-parser nodemon`
 
@@ -72,8 +76,54 @@ Registering a user, hashing passwords, login methods, using mongo db, Jwt's , Ge
 ## User login (compare hash with real passwrod) - with becrypt
 <img width="819" alt="image" src="https://user-images.githubusercontent.com/56376002/208286673-93b042db-6a6e-4d1f-a708-15c4398d5279.png">
 
-Login route
+
 <img width="819" alt="image" src="https://user-images.githubusercontent.com/56376002/208293252-64aecdb4-09d4-405f-949d-169d0f76ebc8.png">
+
+##  JWT is a JSON web token
+- You probably will not let anyone post data to your database, right?
+- So you're going to need to add some security security measures, some at some point, because when we
+
+### So a token is the hash that we provide the user after they log in or maybe after they've register.
+  And now this token is going to be stored within the memory of the browser.
+- So to validate that the user can do what you know it wants to do, we're going to grab the token. We're going to make sure that this is a valid token because we gave the user this token.
+ 
+ ###  Crypto Js -  is a library that we can use to hash or encrypt things. 
+ - let's create a fake jwt - Right, well what we are going to do when they log in after the we validate that they use an email and
+the passwords are good. We are going to send that token back.
+
+<img width="599" alt="image" src="https://user-images.githubusercontent.com/56376002/208297469-0a8c97db-a21d-4d56-a369-a42ed8d7f046.png">
+
+
+### Jwt token creation using Jsonwebtoken
+`yarn add jsonwebtoken`
+<img width="513" alt="image" src="https://user-images.githubusercontent.com/56376002/208297901-ef966e64-789d-449e-9cf4-4797901b5a2b.png">
+
+`token- eyJhbGciOiJIUzI1NiJ9.MTAw.nY-BqGpV74M_PZQ97_E72cJ6Qxda6FtvEUoYn10Wg78`
+
+<img width="903" alt="image" src="https://user-images.githubusercontent.com/56376002/208300084-fed36dca-7979-4b1b-ba30-617cf591fae1.png">
+
+
+Storing the token on mongo  - just for example
+
+<img width="765" alt="image" src="https://user-images.githubusercontent.com/56376002/208300033-cdd5d048-b086-44de-96e4-a876f7d74ded.png">
+
+- Stored the token as a cookie on server
+
+<img width="903" alt="image" src="https://user-images.githubusercontent.com/56376002/208300058-9022d1ba-4932-4249-a9bb-d3cc5d1d3743.png">
+
+- so now we get the token in the cookies -which is the jwt , now everytime user acceses some different route or trys to do something , we ask the user for the token that he just got after logging in -- (in this case the cookie token)
+- Now we will verify this token  -- if it's correct user is allowed to do whatever he is doing
+
+## Verify the TOKEN
+- Install the cookie parser to read the cookie
+ `yarn add cookie-parser`
+ 
+1. Get the token from cookie
+2. Verify the token
+ [Note- UserSchema.statics == is a way of creating custom methods]
+ Here we parse the cookie token and then verify it with the secret password
+
+
 
 
 
