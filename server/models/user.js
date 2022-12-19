@@ -61,6 +61,17 @@ userSchema.methods.generateToken = function(cb) {
     })
 }
 
+userSchema.statics.findByToken = (function(token, cb ) {
+    const user = this;
+    jwt.verify(token, secret, (err, decode) => {
+        user.findOne({_id: decode}, (err, user) => {
+            if (err) return cb(err);
+            cb(null, user);
+        })
+    } )
+
+})
+
 // basically the pre save runs like this
 //  userDetails.preSave.save((err, doc) 
 const User = mongoose.model('UserModel', userSchema);

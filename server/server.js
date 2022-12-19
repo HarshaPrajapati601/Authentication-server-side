@@ -1,6 +1,7 @@
 const express = require('express');
 const Mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const app = express();
 const bcrypt = require('bcrypt');
 
@@ -9,6 +10,7 @@ Mongoose.connect(mongoUri);
 
 // MIDDLEWARE
 app.use(bodyParser.json());
+app.use(cookieParser())
 
 // IMPORTING MODELS
 const { User } = require('./models/user');
@@ -48,7 +50,17 @@ app.post('/api/register-users', (req, res) => {
         });
         // 3. send the response
     })
-
+// verify the token
+    app.get('/api/books', (req, res) => {
+        let token = req.cookies?.authToken;
+        User.findByToken(token, (err, user) => {
+            if (err) throw(err);
+            if(!user) res.status(400).send({message: 'User not found'});
+            res.status(200).send(user);
+            
+        }) 
+       
+    })
 
 const port = process.env.PORT || 3003;
 app.listen(port); //listening to the port
